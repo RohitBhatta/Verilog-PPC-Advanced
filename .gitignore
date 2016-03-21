@@ -1,0 +1,6 @@
+.*.swp
+ppc
+*.vcd
+*.out
+*.raw
+*.cycles

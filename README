@@ -1,0 +1,74 @@
+Due date: Sunday 4/10/2016 @11:59pm
+
+Objective: Work with more realistic (still ideal) memory,
+           think about performance
+
+Assignment: 
+
+(1) Update your design for p9 in order to implement more PowerPC instructions
+
+    additional instructions:
+        std (memory has a write port now)
+        mtspr (only support xer and spr, all others are undefined)
+        mfspr (only support xer and spr, all others are undefined)
+        mtcrf
+ 
+    original set: add or addi b bc bclr ld ldu sc
+
+
+(2) You're expected to contribute a test case that has the same name as your
+    CSID. Feel free to use your test from p8 as is or with updates
+
+(3) Your score will depend on:
+
+    - correctness (passing as many tests as possible)
+    - performance (number of cycles needed to run the tests)
+    - your test's ability to either break other code or slow it down
+
+Files and modules:
+~~~~~~~~~~~~~~~~~~
+
+mem.v contains the simple memory implementation (2 read ports)
+
+regs.v contains the register file implementation (2 read ports + 2 write ports)
+
+clock.v contains the clock generator, it prints the number of cycles needed
+    to run and contains logic to terminate the simulation after 10000 cycles
+
+ppc.v your implementation. You must use mem for your memory and clock for your
+    clock
+
+Please leave mem.v, regs.v, and clock.v alone, feel free to change ppc.v
+
+The general purpose registers must be accessed in regs.v
+
+To compile
+~~~~~~~~~~
+
+    make
+
+To test
+~~~~~~~
+
+    make clean test
+
+    # expected output in hello.ok, ...
+    # actual output in hello.out, ...
+
+
+To run one test
+~~~~~~~~~~~~~~~
+
+    make clean hello.res
+
+    hello.ok    ... expected output
+    hello.out   ... actual output
+    hello.raw   ... raw with debug output
+    hello.vcd   ... waveform file
+    hello.cycle ... number of cycles needed to run hello
+
+To look at waveforms:
+~~~~~~~~~~~~~~~~~~~~~
+
+    make clean test
+    gtkwave hello.vcd
