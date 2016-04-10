@@ -145,14 +145,15 @@ module main();
                 cr[0] <= isLess;
                 cr[1] <= isGreater;
                 cr[2] <= isEqual;
-                cr[3] <= (allAdd & inst[21]) ? (isOver | xer[31]) : xer[31];
+                cr[3] <= (allAdd & inst[21]) ? (isOver | xer[32]) : xer[32];
             end
             if (isMtcrf) begin
                 cr <= ((regReadData0[32:63] & mask) | (cr & ~mask));
             end
             //Update xer
             if (allAdd & inst[21]) begin
-                xer[31] <= isOver | xer[31];
+                xer[32] <= isOver | xer[32];
+                xer[33] <= isOver;
             end
             //Mtspr
             if (isMtspr) begin
