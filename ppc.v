@@ -104,7 +104,7 @@ module main();
     wire [0:63]ctr1 = ctr - 1;
     reg [0:63]lr = 0;
     reg [0:31]cr = 0;
-    reg [0:31]xer = 0;
+    reg [0:63]xer = 0;
 
     /******/
     /* PC */
