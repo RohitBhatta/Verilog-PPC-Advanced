@@ -219,7 +219,7 @@ module main();
     wire isStd = (op == 62) & (inst[30:31] == 0);
     wire isMtspr = (op == 31) & (xop10 == 467) & ((n == 1) | (n == 8) | (n == 9));
     wire isMfspr = (op == 31) & (xop10 == 339) & ((n == 1) | (n == 8) | (n == 9));
-    wire isMtcrf = (op == 31) & (xop10 == 144) & (inst[11] == 0);
+    wire isMtcrf = (op == 31) & (xop10 == 144) & ~inst[11];
 
     //Combined Instructions
     wire allAdd = isAdd | isAddDot | isAddO | isAddODot;
