@@ -28,8 +28,8 @@ module main();
     wire [0:63]memReadData1;
 
     wire memWriteEn = (state == `X) & isStd;
-    wire [63:3]memWriteAddr = regReadData0;
-    wire [63:0]memWriteData = stda[0:60];
+    wire [63:3]memWriteAddr = stda[0:60];
+    wire [63:0]memWriteData = regReadData0;
 
     mem mem0(clk,
         memReadEn0,memReadAddr0,memReadData0,
@@ -87,6 +87,7 @@ module main();
     wire [0:63]vb = regReadData1;
     wire [0:63]vs = regReadData0;
     wire [0:63]va0 = (ra == 0) ? 0 : va;
+    wire [0:63]vs0 = (rs == 0) ? 0 : vs;
     wire [0:7]print0 = regReadData1[56:63];
     wire [0:63]print2 = regReadData1;
 
@@ -233,6 +234,6 @@ module main();
 
     wire [0:63]nextPC = isBranching ? branchTarget : (pc + 4);
     wire [0:63]ea = va0 + ds;
-    wire [0:63]stda = vs + ds;
+    wire [0:63]stda = vs0 + ds;
 
 endmodule
