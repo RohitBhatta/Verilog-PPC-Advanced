@@ -28,7 +28,7 @@ module main();
     wire [0:63]memReadData1;
 
     wire memWriteEn = (state == `X) & isStd;
-    wire [63:3]memWriteAddr = stda[0:60];
+    wire [63:3]memWriteAddr = ea[0:60];
     wire [63:0]memWriteData = regReadData0;
 
     mem mem0(clk,
@@ -234,6 +234,6 @@ module main();
 
     wire [0:63]nextPC = isBranching ? branchTarget : (pc + 4);
     wire [0:63]ea = va0 + ds;
-    wire [0:63]stda = vs0 + ds;
+    //wire [0:63]stda = vs0 + ds;
 
 endmodule
