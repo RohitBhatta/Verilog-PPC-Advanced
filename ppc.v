@@ -40,7 +40,7 @@ module main();
     /* regs */
     /********/
 
-    wire regReadEn0 = (state == `D) & (allAdd | allOr | isAddi | allLd | isSc | isStd | isMtspr | isMtcrf);
+    wire regReadEn0 = ((state == `D) & (allAdd | allOr | isAddi | allLd | isSc | isStd)) | ((state == `X) & (isMtspr | isMtcrf));
     wire [0:4]regReadAddr0 = isSc ? 0 : ((allOr | isStd | isMtspr | isMtcrf) ? rs : ra);
     wire [0:63]regReadData0;
 
@@ -49,7 +49,7 @@ module main();
     wire [0:63]regReadData1;
 
 
-    wire regWriteEn0 = (state == `WB) & (allAdd | allOr | isAddi | allLd);
+    wire regWriteEn0 = (state == `WB) & (allAdd | allOr | isAddi | allLd | isMfspr);
     wire [0:4]regWriteAddr0 = allOr ? ra : rt;
     wire [0:63]regWriteData0 = allAdd ? (va + vb) : allOr ? ((rb == 0) ? vs : (vs | vb)) : isAddi ? (va0 + imm) : allLd ? memReadData0 : (isMfspr & (n == 1)) ? xer : (isMfspr & (n == 8)) ? lr : (isMfspr & (n == 9)) ? ctr : 0;
 
