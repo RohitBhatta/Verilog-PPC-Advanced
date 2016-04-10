@@ -40,7 +40,7 @@ module main();
     /* regs */
     /********/
 
-    wire regReadEn0 = (state == `D) & (allAdd | allOr | isAddi | allLd | isSc | isStd);
+    wire regReadEn0 = (state == `D) & (allAdd | allOr | isAddi | allLd | isSc | isStd | isMtspr | isMtcrf);
     wire [0:4]regReadAddr0 = isSc ? 0 : ((allOr | isStd | isMtspr | isMtcrf) ? rs : ra);
     wire [0:63]regReadData0;
 
