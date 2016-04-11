@@ -28,8 +28,8 @@ module main();
     wire [0:63]memReadData1;
 
     wire memWriteEn = (state == `X) & isStd;
-    wire [63:3]memWriteAddr = ea[0:60];
-    wire [63:0]memWriteData = regReadData0;
+    wire [0:60]memWriteAddr = ea[0:60];
+    wire [0:63]memWriteData = vsStd;
 
     mem mem0(clk,
         memReadEn0,memReadAddr0,memReadData0,
@@ -41,11 +41,11 @@ module main();
     /********/
 
     wire regReadEn0 = ((state == `D) & (allAdd | allOr | isAddi | allLd | isSc | isStd)) | ((state == `X) & (isMtspr | isMtcrf));
-    wire [0:4]regReadAddr0 = isSc ? 0 : ((allOr | isStd | isMtspr | isMtcrf) ? rs : ra);
+    wire [0:4]regReadAddr0 = isSc ? 0 : ((allOr | isMtspr | isMtcrf) ? rs : ra);
     wire [0:63]regReadData0;
 
-    wire regReadEn1 = (state == `D) & (allAdd | allOr | isSc);
-    wire [0:4]regReadAddr1 = isSc ? 3 : rb;
+    wire regReadEn1 = (state == `D) & (allAdd | allOr | isSc | isStd);
+    wire [0:4]regReadAddr1 = isSc ? 3 : isStd ? rs : rb;
     wire [0:63]regReadData1;
 
 
@@ -86,8 +86,8 @@ module main();
     wire [0:63]va = regReadData0;
     wire [0:63]vb = regReadData1;
     wire [0:63]vs = regReadData0;
+    wire [0:63]vsStd = regReadData1;
     wire [0:63]va0 = (ra == 0) ? 0 : va;
-    wire [0:63]vs0 = (rs == 0) ? 0 : vs;
     wire [0:7]print0 = regReadData1[56:63];
     wire [0:63]print2 = regReadData1;
 
@@ -165,6 +165,9 @@ module main();
                     ctr <= regReadData0;
                 end
             end
+            /*$display("%s%h", "ea: ", ea);
+            $display("%s%h", "ra: ", ra);
+            $display("%s%h", "mem: ", memReadData0);*/
         end else begin
             state <= state + 1;
         end
@@ -235,6 +238,5 @@ module main();
 
     wire [0:63]nextPC = isBranching ? branchTarget : (pc + 4);
     wire [0:63]ea = va0 + ds;
-    //wire [0:63]stda = vs0 + ds;
 
 endmodule
